@@ -1,2 +1,2 @@
 # EC311_FinalProject
-Verilog for programming Nexys-A7 FPGA
+Verilog for Nexys-A7 FPGA implementation of _____________
