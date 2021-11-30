@@ -26,7 +26,7 @@ module CountDownHandler(
     output reg [7:0] count
     );
     
-    always @(reset or clock) begin
+    always @(negedge reset or clock) begin
         if (reset == 0) begin // active low reset
             count <= 8'd5;
         end else if (clock && count != 0) begin
