@@ -23,16 +23,21 @@
 module CountDownHandler(
     input clock,
     input reset,
-    output reg [7:0] count
+    output reg [15:0] count,
+    output reg start
     );
     
-    always @(negedge reset or clock) begin
+    always @(negedge reset or posedge clock) begin
         if (reset == 0) begin // active low reset
-            count <= 8'd5;
+            count <= 16'd5;
+            start <= 0;
         end else if (clock && count != 0) begin
-            count <= count - 8'b1;
-        end else
+            count <= count - 16'b1;
+            start <= 0;
+        end else begin
             count <= count;
+            start <= 1;
+        end
     end 
          
 endmodule
