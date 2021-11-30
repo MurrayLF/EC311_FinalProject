@@ -27,12 +27,12 @@ module CountDownHandler(
     );
     
     always @(reset or clock) begin
-        if (reset == 1) begin // active high reset
+        if (reset == 0) begin // active low reset
             count <= 8'd5;
-        end else if (clock) begin
+        end else if (clock && count != 0) begin
             count <= count - 8'b1;
         end else
             count <= count;
-   end 
+    end 
          
 endmodule
