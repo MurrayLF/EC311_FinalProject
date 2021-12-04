@@ -25,9 +25,9 @@ module Top(
     input           reset_i,
     input   [3:0]   buttons_i,
     input   [15:0]  switches_i,
-    output  [15:0]  LEDs_o,
-    output  [3:0]   display_select_o,
-    output  [6:0]   display_out_o
+    output  [15:0]  LEDs_o//,
+    //output  [3:0]   display_select_o,
+    //output  [6:0]   display_out_o
     );
     
     wire        clock_1Hz_int;
