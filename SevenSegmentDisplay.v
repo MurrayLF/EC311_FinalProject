@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module seven_segment_display(
+module SevenSegmentDisplay(
     input [3:0] display_out,
     output reg [6:0] DigitN
     );
