@@ -5,7 +5,7 @@
 // 
 // Create Date: 11/30/2021 12:27:27 AM
 // Design Name: 
-// Module Name: SevenSegmentDisplay
+// Module Name: BCD2SSD
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -19,8 +19,8 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-// Verilog implementation of BCD to 7SD conversion
-module SevenSegmentDisplay(
+// Verilog implementation of BCD to SSD conversion
+module BCD2SSD(
     input [3:0] display_in,
     output reg [6:0]digit_o
     );
