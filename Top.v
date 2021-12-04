@@ -31,8 +31,8 @@ module Top(
     );
     
     wire        clock_1Hz_int;
+    wire        clock_2Hz_int;
     wire        clock_5Hz_int;
-    wire        clock_10Hz_int;
     wire        clock_14MHz_int;
     wire [1:0]  mode_int;
     wire        whacked_int;
@@ -53,7 +53,7 @@ module Top(
     reg         countdown_start;
     reg [15:0]  display_int;
 
-    ClockDivider clkdivide(clock_i, ~reset_i, clock_1Hz_int, clock_5Hz_int, clock_10Hz_int, clock_14MHz_int);
+    ClockDivider clkdivide(clock_i, ~reset_i, clock_1Hz_int, clock_2Hz_int, clock_5Hz_int, clock_14MHz_int);
     ModeSelection modeselect(buttons_i, countdown_start, mode_int);
     GameHandler gamehandle(countdown_start, game_start, game_finish, mode_selected);
     CountDownHandler countdown(clock_1Hz_int, reset_i, gametime_int, game_start);
@@ -61,8 +61,8 @@ module Top(
     always @ (*) begin
         case(mode_int)
             2'b01: active_clock_int = clock_1Hz_int;
-            2'b10: active_clock_int = clock_5Hz_int;
-            2'b11: active_clock_int = clock_10Hz_int;
+            2'b10: active_clock_int = clock_2Hz_int;
+            2'b11: active_clock_int = clock_5Hz_int;
             default: active_clock_int = 1'b0;
         endcase
     end //always
