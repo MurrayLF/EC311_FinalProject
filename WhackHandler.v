@@ -19,9 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
-
-
+// Verilog implementation of handler for user "whack" (switch) inputs
 module WhackHandler(
     input reset_i,
     input [15:0]mole_i,
