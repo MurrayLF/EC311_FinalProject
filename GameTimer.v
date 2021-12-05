@@ -23,9 +23,10 @@
 module GameTimer(
     input clock,
     input reset,
-    output reg [15:0] count,
     output reg finish
     );
+    
+    reg [15:0] count = 0; 
     
     always @(negedge reset or posedge clock) begin
         if (reset == 0) begin // active low reset
