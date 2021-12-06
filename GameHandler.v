@@ -21,21 +21,18 @@
 
 
 module GameHandler(
-    input countdown_start,
     input game_start,
     input game_finish, 
     output reg [1:0] game_select
     );
     
     always @ (*) begin
-        if (countdown_start == 1) begin
-            game_select <= 2'b01;
-        end
-        if (game_start == 1) begin
-            game_select <= 2'b10;
-        end
         if (game_finish == 1) begin
             game_select <= 2'b11;
+        end else if (game_start == 1) begin
+            game_select <= 2'b10;
+        end else begin
+            game_select <= 2'b01;
         end //if
     end //always
 endmodule
