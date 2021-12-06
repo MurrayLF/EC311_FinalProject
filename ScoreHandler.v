@@ -22,17 +22,12 @@
 
 module ScoreHandler(
     input whacked,
-    input start,
+    input reset,
     output reg [15:0] score
     );
     
-    always @ (whacked) begin
-        case(start)
-            1'b1: // start game
-                score = (whacked) ? score + 1: score;
-            default:
-                // game hasnt started
-                score <= 0;
-        endcase
+    always @ (whacked or reset) begin
+        if (reset == 0) score = 16'b0;
+        else if (whacked)score = score + 1;
     end 
 endmodule
