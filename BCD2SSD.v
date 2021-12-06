@@ -37,7 +37,9 @@ module BCD2SSD(
             4'b0111: digit_o = 7'b0001111;
             4'b1000: digit_o = 7'b0000000;
             4'b1001: digit_o = 7'b0001100;
-            default: digit_o = 7'b1111111;
+            default: digit_o = 7'b1111110;
         endcase
     end  
 endmodule
+
+

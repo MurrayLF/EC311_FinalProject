@@ -19,15 +19,20 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
+// Verilog code for determination of score
 module ScoreHandler(
+    input clock,
     input whacked,
     input reset,
     output reg [15:0] score
     );
     
-    always @ (whacked or reset) begin
+    always @ (posedge clock) begin
         if (reset == 0) score = 16'b0;
-        else if (whacked)score = score + 1;
+        else if (whacked) score = score + 1;
+        else score = score;
     end 
 endmodule
+
+
+

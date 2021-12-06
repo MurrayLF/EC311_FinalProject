@@ -31,39 +31,33 @@ module SSDControl(
     output reg [3:0] display_out
     );
     
-    // 2-bit counter
-    reg [1:0] counter;
-    
-    always @(posedge clock or negedge reset) begin
-        if (reset == 0) begin
-            counter <= 0;
-        end else if (counter == 2'b11) begin
-            counter <= 0;
-        end else begin
-            counter <= counter + 1'b1;
-        end
-    end
-    
     // muxes
     always @(posedge clock) begin
-        case(counter)
-            2'b00: begin
-                digit_select <= 4'b1110;
-                display_out <= ones_i;
-                end
-            2'b01: begin
-                digit_select <= 4'b1101;
-                display_out <= tens_i;
-                end
-            2'b10: begin
-                digit_select <= 4'b1011;
-                display_out <= hundreds_i;
-                end
-            2'b11: begin
-                digit_select <= 4'b0111;
-                display_out <= thousands_i;
-                end
-        endcase
-    end 
+        if (reset == 1'b0) begin
+            digit_select <= 4'b1110;
+            display_out <= ones_i;
+        end else begin
+            case(digit_select)
+                4'b1110: begin
+                    digit_select <= 4'b1101;
+                    display_out <= tens_i;
+                    end
+                4'b1101: begin
+                    digit_select <= 4'b1011;
+                    display_out <= hundreds_i;
+                    end
+                4'b1011: begin
+                    digit_select <= 4'b0111;
+                    display_out <= thousands_i;
+                    end
+                default: begin
+                    digit_select <= 4'b1110;
+                    display_out <= ones_i;
+                    end
+            endcase
+        end // else
+    end // always
     
 endmodule
+
+
