@@ -28,12 +28,14 @@ module GameHandler(
     );
     
     always @ (*) begin
+        if (countdown_start == 1) begin
+            game_select <= 2'b01;
+        end
+        if (game_start == 1) begin
+            game_select <= 2'b10;
+        end
         if (game_finish == 1) begin
             game_select <= 2'b11;
-        end else if (game_start == 1) begin
-            game_select <= 2'b10;
-        end else if (countdown_start == 1) begin
-            game_select <= 2'b01;
         end //if
     end //always
 endmodule
