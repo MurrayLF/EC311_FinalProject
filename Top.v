@@ -45,7 +45,6 @@ module Top(
     wire [3:0]  tens_int;
     wire [3:0]  ones_int;
     wire [3:0]  display_out_int;
-    wire        countdown_start;
     wire [15:0] counttime_int;
     wire [15:0] gamescore_int;
     
