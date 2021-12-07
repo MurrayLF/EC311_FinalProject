@@ -23,20 +23,18 @@
 module MoleHandler(
     input clock_i,
     input active_clock_i,
-    input clock_14MHz_i,
+    input [3:0]mole_location_int,
     input reset_i,
     input whacked_i,
     input [1:0]game_state,
     output reg [15:0]mole_o
     );
     
-    reg [3:0]mole_location_int;
     reg [15:0]mole_int;
     reg still_whacked;
     reg clock_confirm;
     reg last_clock_confirm;
     
-    always @ (posedge clock_14MHz_i) mole_location_int <= mole_location_int + 1'b1;
     
     always @ (posedge active_clock_i) begin
         clock_confirm = ~clock_confirm;
