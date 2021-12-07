@@ -19,19 +19,19 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+//Verilog code for random number generation
+module LFSR(clock_i, reset_i, out_o);
 
-module LFSR(clk, rst, out);
+  input clock_i;
+  input reset_i;
+  output reg [3:0] out_o;
 
-  input clk;
-  input rst;
-  output reg [3:0] out;
+  wire feedback_int;
 
-  wire feedback;
+  assign feedback_int = ~(out_o[3] ^ out_o[2]);
 
-  assign feedback = ~(out[3] ^ out[2]);
-
-   always @(posedge clk or negedge rst) begin
-       if(rst == 0) out <= 4'b0000;
-       out = {out[2:0],feedback};
-    end
+  always @(posedge clock_i or negedge reset_i) begin
+    if(reset_i == 0) out_o <= 4'b0000;
+    out_o = {out_o[2:0], feedback_int};
+  end //always
 endmodule
