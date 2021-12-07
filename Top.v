@@ -36,7 +36,6 @@ module Top(
     wire        clock_5Hz_int;
     wire        clock_10KHz_int;
     wire [1:0]  mode_int;
-    //wire        mode_change;
     wire        whacked_int;
     wire [1:0]  mode_selected;
     wire [3:0]  thousands_int;
@@ -75,19 +74,18 @@ module Top(
     CountConverter convert(counttime_int, counttime_int2);
     
     //In-game
-    MoleHandler molesetup(active_clock_int, clock_2Hz_int, reset_int, whacked_int, game_state, LEDs_o);
-    WhackHandler whacking(reset_int, LEDs_o, switches_i, whacked_int);
+    MoleHandler molesetup(clock_i, active_clock_int, clock_2Hz_int, reset_int, whacked_int, game_state, LEDs_o);
+    WhackHandler whacking(clock_i, reset_int, LEDs_o, switches_i, whacked_int);
     //In-game & postgame
     ScoreHandler scoring(clock_i, whacked_int, reset_int, gamescore_int);
     
-    always @ (game_state or counttime_int or gamescore_int) begin
+    always @ (game_state or counttime_int2 or gamescore_int) begin
         if (game_state == 2'b01) display_int = counttime_int2;
         else if (game_state == 2'b10 || game_state == 2'b11) display_int = gamescore_int;
     end //always
 
     B2BCD b2bcd(display_int, thousands_int, hundreds_int, tens_int, ones_int);
     SSDControl ssdctrl(clock_10KHz_int, ~reset_i, thousands_int, hundreds_int, tens_int, ones_int, display_select_int, display_out_int);
-    //displaycontrol ssdctrl(clock_i, ~reset_i, ones_int, tens_int, hundreds_int, thousands_int, display_select_int, display_out_int);
     BCD2SSD bcd2ssd(display_out_int, display_out_int2);
     
     always @ (mode_int or display_select_int or display_out_int2) begin
