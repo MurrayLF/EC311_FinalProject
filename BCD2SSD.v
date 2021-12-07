@@ -41,5 +41,3 @@ module BCD2SSD(
         endcase
     end  
 endmodule
-
-
