@@ -33,6 +33,7 @@ module Top(
     wire        clock_1Hz_int;
     wire        clock_2Hz_int;
     wire        clock_05Hz_int;
+    wire        clock_4Hz_int;
     wire        clock_10KHz_int;
     wire [1:0]  mode_int;
     wire        whacked_int;
@@ -56,7 +57,7 @@ module Top(
     reg  [3:0]  display_select_int2;
     reg  [6:0]  display_out_int3;
 
-    ClockDivider clkdivide(clock_i, ~reset_i,  clock_05Hz_int, clock_1Hz_int, clock_2Hz_int,clock_10KHz_int);
+    ClockDivider clkdivide(clock_i, ~reset_i,  clock_05Hz_int, clock_1Hz_int, clock_2Hz_int, clock_4Hz_int, clock_10KHz_int);
     ModeSelection modeselect(clock_i, buttons_i, mode_int);
     
     always @ (*) begin
@@ -73,7 +74,7 @@ module Top(
     TimeControl timer(clock_1Hz_int, reset_int, counttime_int, game_state);
     CountConverter convert(counttime_int, counttime_int2);
     
-    LFSR rng(clock_2Hz_int, reset_int, mole_location_int);
+    LFSR rng(clock_4Hz_int, reset_int, mole_location_int);
     
     //In-game
     MoleHandler molesetup(clock_i, active_clock_int, mole_location_int, reset_int, whacked_int, game_state, LEDs_o);
