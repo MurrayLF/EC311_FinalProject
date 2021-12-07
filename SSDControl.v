@@ -59,5 +59,3 @@ module SSDControl(
     end // always
     
 endmodule
-
-
