@@ -19,7 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
+// Verilog code for internal reset setting
 module ResetHandler(
     input clock_i, 
     input reset_i, 
