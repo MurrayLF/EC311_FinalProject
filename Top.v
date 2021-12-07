@@ -33,7 +33,7 @@ module Top(
     
     wire        clock_1Hz_int;
     wire        clock_2Hz_int;
-    wire        clock_5Hz_int;
+    wire        clock_05Hz_int;
     wire        clock_10KHz_int;
     wire [1:0]  mode_int;
     wire        whacked_int;
@@ -56,14 +56,14 @@ module Top(
     reg  [3:0]  display_select_int2;
     reg  [6:0]  display_out_int3;
 
-    ClockDivider clkdivide(clock_i, ~reset_i, clock_1Hz_int, clock_2Hz_int, clock_5Hz_int, clock_10KHz_int);
+    ClockDivider clkdivide(clock_i, ~reset_i,  clock_05Hz_int, clock_1Hz_int, clock_2Hz_int,clock_10KHz_int);
     ModeSelection modeselect(clock_i, buttons_i, mode_int);
     
     always @ (*) begin
         case(mode_int)
-            2'b01: active_clock_int = clock_1Hz_int;
-            2'b10: active_clock_int = clock_2Hz_int;
-            2'b11: active_clock_int = clock_5Hz_int;
+            2'b01: active_clock_int = clock_05Hz_int;
+            2'b10: active_clock_int = clock_1Hz_int;
+            2'b11: active_clock_int = clock_2Hz_int;
             default: active_clock_int = 1'b0;
         endcase
     end //always
