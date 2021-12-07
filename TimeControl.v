@@ -30,14 +30,14 @@ module TimeControl(
     always @ (posedge clock_1Hz_i or negedge reset_i) begin
         if (reset_i == 1'b0) begin
             count_o = 16'b0;
-        end else if(count_o < 16'd41) begin
+        end else if(count_o < 16'd36) begin
             count_o = count_o + 1'b1;
         end // else
     end // always
 
     always @ (*) begin
         if (count_o <= 16'd5) state_o = 2'b01;
-        else if (count_o <= 16'd40) state_o = 2'b10;
+        else if (count_o <= 16'd35) state_o = 2'b10;
         else state_o = 2'b11;
     end //always
 endmodule
