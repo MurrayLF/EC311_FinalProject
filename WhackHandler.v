@@ -19,7 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-// Verilog implementation of handler for user "whack" (switch) inputs
+// Verilog implementation of handler for user "whack" (switch) inputs 
 module WhackHandler(
     input clock_i,
     input reset_i,
