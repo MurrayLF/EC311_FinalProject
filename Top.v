@@ -27,8 +27,7 @@ module Top(
     input   [15:0]  switches_i,
     output  [15:0]  LEDs_o,
     output  [3:0]   display_select_o,
-    output  [6:0]   display_out_o,
-    output reset_int
+    output  [6:0]   display_out_o
     );
     
     wire        clock_1Hz_int;
@@ -46,7 +45,7 @@ module Top(
     wire [15:0]  counttime_int;
     wire [15:0]  counttime_int2;
     wire [15:0] gamescore_int;
-    //wire        reset_int;
+    wire        reset_int;
     wire [1:0]  game_state;
     reg         active_clock_int;
     reg  [1:0]  mode_selected_int;
