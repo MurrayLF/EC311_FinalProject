@@ -33,6 +33,3 @@ module ScoreHandler(
         else score = score;
     end 
 endmodule
-
-
-
