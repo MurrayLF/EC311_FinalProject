@@ -47,6 +47,7 @@ module Top(
     wire [15:0] gamescore_int;
     wire        reset_int;
     wire [1:0]  game_state;
+    wire [3:0]  mole_location_int;
     reg         active_clock_int;
     reg  [1:0]  mode_selected_int;
     reg  [15:0] display_int;
@@ -72,8 +73,10 @@ module Top(
     TimeControl timer(clock_1Hz_int, reset_int, counttime_int, game_state);
     CountConverter convert(counttime_int, counttime_int2);
     
+    LFSR rng(clock_2Hz_int, reset_int, mole_location_int);
+    
     //In-game
-    MoleHandler molesetup(clock_i, active_clock_int, clock_2Hz_int, reset_int, whacked_int, game_state, LEDs_o);
+    MoleHandler molesetup(clock_i, active_clock_int, mole_location_int, reset_int, whacked_int, game_state, LEDs_o);
     WhackHandler whacking(clock_i, reset_int, LEDs_o, switches_i, whacked_int);
     //In-game & postgame
     ScoreHandler scoring(clock_i, whacked_int, reset_int, gamescore_int);
