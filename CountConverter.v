@@ -31,6 +31,3 @@ module CountConverter(
     end //always
     
 endmodule
-
-
-
