@@ -25,7 +25,13 @@ module Top(
     input           reset_i,
     input   [3:0]   buttons_i,
     input   [15:0]  switches_i,
-    output  [15:0]  LEDs_o,
+    //output  [15:0]  LEDs_o,
+    //output  [3:0]   thousands_int,
+    //output [3:0] hundreds_int,
+    //output [3:0] tens_int,
+    //output [3:0] ones_int,
+    output [3:0] display_select_int,
+    output [3:0] display_out_int,
     output  [3:0]   display_select_o,
     output  [6:0]   display_out_o,
     output reset_int
@@ -36,14 +42,13 @@ module Top(
     wire        clock_5Hz_int;
     wire        clock_14MHz_int;
     wire [1:0]  mode_int;
-    //wire        mode_change;
     wire        whacked_int;
     wire [1:0]  mode_selected;
     wire [3:0]  thousands_int;
     wire [3:0]  hundreds_int;
     wire [3:0]  tens_int;
     wire [3:0]  ones_int;
-    wire [3:0]  display_out_int;
+    //wire [3:0]  display_out_int;
     wire [15:0]  counttime_int;
     wire [15:0]  counttime_int2;
     wire [15:0] gamescore_int;
@@ -52,7 +57,7 @@ module Top(
     reg         active_clock_int;
     reg  [1:0]  mode_selected_int;
     reg  [15:0] display_int;
-    wire [3:0]  display_select_int;
+    //wire [3:0]  display_select_int;
     wire [6:0]  display_out_int2;
     reg  [3:0]  display_select_int2;
     reg  [6:0]  display_out_int3;
@@ -69,7 +74,7 @@ module Top(
         endcase
     end //always
     
-    ResetHandler resetornot(clock_i, reset_i, mode_int, reset_int);
+    ResetHandler resetornot(clock_i, reset_i, mode_int, buttons_i, reset_int);
     
     TimeControl timer(clock_1Hz_int, reset_int, counttime_int, game_state);
     CountConverter convert(counttime_int, counttime_int2);
@@ -87,7 +92,7 @@ module Top(
     //end //always
     //display_int
     B2BCD b2bcd(counttime_int2, thousands_int, hundreds_int, tens_int, ones_int);
-    SSDControl ssdctrl(clock_i, reset_i, thousands_int, hundreds_int, tens_int, ones_int, display_select_int, display_out_int);
+    SSDControl ssdctrl(clock_14MHz_int, ~reset_i, thousands_int, hundreds_int, tens_int, ones_int, display_select_int, display_out_int);
     BCD2SSD bcd2ssd(display_out_int, display_out_int2);
     
     always @ (mode_int or display_select_int or display_out_int2) begin
@@ -103,6 +108,3 @@ module Top(
    assign display_out_o = display_out_int3;
    
 endmodule
-
-
-
