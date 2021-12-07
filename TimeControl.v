@@ -41,5 +41,3 @@ module TimeControl(
         else state_o = 2'b11;
     end //always
 endmodule
-
-
