@@ -21,21 +21,29 @@
 
 // Verilog implementation handler for mole location
 module MoleHandler(
+    input clock_i,
     input active_clock_i,
     input clock_14MHz_i,
     input reset_i,
     input whacked_i,
+    input [1:0]game_state,
     output reg [15:0]mole_o
     );
     
     reg [3:0]mole_location_int;
     reg [15:0]mole_int;
+    reg still_whacked;
+    reg clock_confirm;
+    reg last_clock_confirm;
     
     always @ (posedge clock_14MHz_i) mole_location_int <= mole_location_int + 1'b1;
     
     always @ (posedge active_clock_i) begin
-        if (reset_i == 1'b0) mole_int <= 16'b0;
-        else begin
+        clock_confirm = ~clock_confirm;
+        if (reset_i == 1'b0) begin
+            mole_int <= 16'b0;
+            clock_confirm <= 1'b0;
+        end else if (game_state == 2'b10) begin
             case (mole_location_int)
                 4'b0000: mole_int <= 16'b0000000000000001;
                 4'b0001: mole_int <= 16'b0000000000000010; 
@@ -54,13 +62,22 @@ module MoleHandler(
                 4'b1110: mole_int <= 16'b0100000000000000;
                 4'b1111: mole_int <= 16'b1000000000000000;
             endcase
+        end else begin
+            mole_int <= 16'b0;
         end //else
     end //always
     
-    always @ (*) begin
-        if (whacked_i == 1'b1 | reset_i == 1'b0) mole_o = 16'b0;
+    always @ (posedge clock_i) begin
+        if (whacked_i == 1'b1) still_whacked = 1'b1;
+        else if (clock_confirm != last_clock_confirm) begin
+            still_whacked = 1'b0;
+            last_clock_confirm = clock_confirm;
+        end else if (reset_i == 1'b0) begin
+            still_whacked = 1'b0;
+            last_clock_confirm = 1'b0;
+        end
+        
+        if (still_whacked == 1'b1) mole_o = 16'b0;
         else mole_o = mole_int;
     end //always
 endmodule
-
-
