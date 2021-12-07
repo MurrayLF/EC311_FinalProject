@@ -52,5 +52,3 @@ module B2BCD(
         end //for
     end //always
 endmodule
-
-
