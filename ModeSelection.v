@@ -42,5 +42,3 @@ module ModeSelection(
     end //always
 endmodule
 
-
-
