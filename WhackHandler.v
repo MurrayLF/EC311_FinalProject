@@ -1,4 +1,4 @@
-﻿`timescale 1ns / 1ps
+`timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -21,6 +21,7 @@
 
 // Verilog implementation of handler for user "whack" (switch) inputs
 module WhackHandler(
+    input clock_i,
     input reset_i,
     input [15:0]mole_i,
     input [15:0]hammer_i,
@@ -31,7 +32,7 @@ module WhackHandler(
     reg [15:0]strikes_int;
     reg [15:0]hits_int;
     
-    always @ (*) begin
+    always @ (posedge clock_i) begin
         if (reset_i == 0) whacked_o = 1'b0;
         else begin
             strikes_int <= hammer_i ^ prev_hammer_int;
